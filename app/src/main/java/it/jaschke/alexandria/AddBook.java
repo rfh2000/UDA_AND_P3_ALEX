@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import it.jaschke.alexandria.BarcodeReader.BarcodeCaptureActivity;
 import it.jaschke.alexandria.data.AlexandriaContract;
 import it.jaschke.alexandria.services.BookService;
 import it.jaschke.alexandria.services.DownloadImage;
@@ -33,6 +34,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     private final String EAN_CONTENT="eanContent";
     private static final String SCAN_FORMAT = "scanFormat";
     private static final String SCAN_CONTENTS = "scanContents";
+    private static final int RC_BARCODE_CAPTURE = 9001;
 
     private String mScanFormat = "Format:";
     private String mScanContents = "Contents:";
@@ -96,12 +98,19 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
                 // Hint: Use a Try/Catch block to handle the Intent dispatch gracefully, if you
                 // are using an external app.
                 //when you're done, remove the toast below.
-                Context context = getActivity();
-                CharSequence text = "This button should let you scan a book for its barcode!";
-                int duration = Toast.LENGTH_SHORT;
+//                Context context = getActivity();
+//                CharSequence text = "This button should let you scan a book for its barcode!";
+//                int duration = Toast.LENGTH_SHORT;
+//
+//                Toast toast = Toast.makeText(context, text, duration);
+//                toast.show();
 
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+                // launch barcode activity.
+                //Intent intent = new Intent(this, BarcodeCaptureActivity.class);
+                Intent intent = new Intent(getContext(), BarcodeCaptureActivity.class);
+                //intent.putExtra(BarcodeCaptureActivity.AutoFocus, autoFocus.isChecked());
+                //intent.putExtra(BarcodeCaptureActivity.UseFlash, useFlash.isChecked());
+                startActivityForResult(intent, RC_BARCODE_CAPTURE);
 
             }
         });

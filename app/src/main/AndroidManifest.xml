@@ -31,7 +31,8 @@
                 android:value=".MainActivity" />
         </activity>
 
-
+        <activity android:name="it.jaschke.alexandria.BarcodeReader.BarcodeCaptureActivity"
+            android:label="Read Barcode"/>
 
         <provider
             android:name=".data.BookProvider"
