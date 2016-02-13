@@ -62,7 +62,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_below="@+id/fullBookCover"
                     android:layout_margin="10dp"
-                    />
+                    android:paddingRight="8dp"/>
 
 
                 <LinearLayout
@@ -86,7 +86,8 @@
                         android:id="@+id/authors"
                         android:layout_weight="1"
                         android:textStyle="bold"
-                        android:gravity="right|top"/>
+                        android:gravity="right|top"
+                        android:paddingRight="8dp"/>
                 </LinearLayout>
 
                 <ImageButton

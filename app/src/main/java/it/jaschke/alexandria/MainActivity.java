@@ -165,7 +165,12 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     }
 
     public void goBack(View view){
+        int backStackCount = getSupportFragmentManager().getBackStackEntryCount();
+        Log.v(LOG_TAG, "Back stack count: " + backStackCount);
+        //getSupportFragmentManager().popBackStack("Book Detail", 0);
         getSupportFragmentManager().popBackStack();
+        //boolean hasAPop = getSupportFragmentManager().popBackStack();
+        //Log.v(LOG_TAG, "Is there a popper: " + hasAPop);
     }
 
     private boolean isTablet() {
@@ -176,9 +181,9 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
     @Override
     public void onBackPressed() {
-        if(getSupportFragmentManager().getBackStackEntryCount()<2){
-            finish();
-        }
+//        if(getSupportFragmentManager().getBackStackEntryCount()<2){
+//            finish();
+//        }
         super.onBackPressed();
     }
 
