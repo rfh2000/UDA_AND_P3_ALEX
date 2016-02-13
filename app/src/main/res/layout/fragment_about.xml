@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/about_text"
-        android:padding="@dimen/abc_text_size_body_2_material"/>
+        android:padding="@dimen/abc_text_size_body_2_material"
+        android:text="@string/about_text" />
 
 </FrameLayout>

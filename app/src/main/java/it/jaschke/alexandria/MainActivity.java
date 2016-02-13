@@ -12,7 +12,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,19 +22,17 @@ import it.jaschke.alexandria.api.Callback;
 
 public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks, Callback {
 
-    private static final String LOG_TAG = MainActivity.class.getSimpleName();
-
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment navigationDrawerFragment;
 
     /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
+     * Used to store the last screen mTitle. For use in {@link #restoreActionBar()}.
      */
-    private CharSequence title;
-    public static boolean IS_TABLET = false;
-    private BroadcastReceiver messageReciever;
+    private CharSequence mTitle;
+    public static boolean mIsTablet = false;
+    private BroadcastReceiver mMessageReceiver;
 
     public static final String MESSAGE_EVENT = "MESSAGE_EVENT";
     public static final String MESSAGE_KEY = "MESSAGE_EXTRA";
@@ -43,25 +40,25 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        IS_TABLET = isTablet();
+        mIsTablet = isTablet();
 
-        if(IS_TABLET){
+        if(mIsTablet){
             setContentView(R.layout.activity_main_tablet);
-        }else {
+        } else {
             setContentView(R.layout.activity_main);
         }
 
-        messageReciever = new MessageReciever();
+        mMessageReceiver = new MessageReciever();
         IntentFilter filter = new IntentFilter(MESSAGE_EVENT);
-        LocalBroadcastManager.getInstance(this).registerReceiver(messageReciever,filter);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,filter);
 
         navigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        title = getTitle();
+        mTitle = getTitle();
 
         // Set up the drawer.
         navigationDrawerFragment.setUp(R.id.navigation_drawer,
-                    (DrawerLayout) findViewById(R.id.drawer_layout));
+                (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
     @Override
@@ -86,19 +83,19 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
         fragmentManager.beginTransaction()
                 .replace(R.id.container, nextFragment)
-                .addToBackStack((String) title)
+                .addToBackStack((String) mTitle)
                 .commit();
     }
 
     public void setTitle(int titleId) {
-        title = getString(titleId);
+        mTitle = getString(titleId);
     }
 
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(title);
+        actionBar.setTitle(mTitle);
     }
 
 
@@ -132,7 +129,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
     @Override
     protected void onDestroy() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReciever);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
         super.onDestroy();
     }
 
@@ -165,12 +162,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     }
 
     public void goBack(View view){
-        int backStackCount = getSupportFragmentManager().getBackStackEntryCount();
-        Log.v(LOG_TAG, "Back stack count: " + backStackCount);
-        //getSupportFragmentManager().popBackStack("Book Detail", 0);
         getSupportFragmentManager().popBackStack();
-        //boolean hasAPop = getSupportFragmentManager().popBackStack();
-        //Log.v(LOG_TAG, "Is there a popper: " + hasAPop);
     }
 
     private boolean isTablet() {
@@ -181,9 +173,9 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
     @Override
     public void onBackPressed() {
-//        if(getSupportFragmentManager().getBackStackEntryCount()<2){
-//            finish();
-//        }
+        if(getSupportFragmentManager().getBackStackEntryCount()<2){
+            finish();
+        }
         super.onBackPressed();
     }
 
