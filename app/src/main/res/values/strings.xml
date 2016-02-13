@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Alexandria</string>
+    <string name="app_name" translatable="false">Alexandria</string>
 
     <!-- Menu Items -->
     <string name="books">List of Books</string>
@@ -42,8 +42,8 @@
     <string name="pref_network_status_key" translatable="false">network-status</string>
 
     <!-- Strings used when displaying the state of the Location in settings -->
-    <string name="pref_location_error_description">Invalid Location (<xliff:g id="location_setting">%1$s</xliff:g>)"</string>
-    <string name="pref_location_unknown_description">Validating Location... (<xliff:g id="location_setting">%1$s</xliff:g>)"</string>
+    <string name="pref_location_error_description" translatable="false">Invalid Location (<xliff:g id="location_setting">%1$s</xliff:g>)"</string>
+    <string name="pref_location_unknown_description" translatable="false">Validating Location... (<xliff:g id="location_setting">%1$s</xliff:g>)"</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="about_text">This application gets book information from a Google API. All titles, cover images, and author information come from there.

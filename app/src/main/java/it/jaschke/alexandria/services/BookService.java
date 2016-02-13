@@ -1,5 +1,6 @@
 package it.jaschke.alexandria.services;
 
+import android.app.AlertDialog;
 import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Context;
@@ -62,9 +63,6 @@ public class BookService extends IntentService {
         if (intent != null) {
             final String action = intent.getAction();
             if (FETCH_BOOK.equals(action)) {
-
-                // Do we need to test for network connectivity here?
-
                 final String ean = intent.getStringExtra(EAN);
                 fetchBook(ean);
             } else if (DELETE_BOOK.equals(action)) {
@@ -214,6 +212,9 @@ public class BookService extends IntentService {
                     imgUrl = bookInfo.getJSONObject(IMG_URL_PATH).getString(IMG_URL);
                 }
 
+                Log.v(LOG_TAG, "String is " + ean + "--" + title);
+                Log.v(LOG_TAG, "The book " + title + " exists = " + checkBookExists(ean));
+
                 writeBackBook(ean, title, subtitle, desc, imgUrl);
 
                 if(bookInfo.has(AUTHORS)) {
@@ -230,6 +231,18 @@ public class BookService extends IntentService {
 
     }
 
+    private boolean checkBookExists(String ean){
+        Cursor c = getContentResolver().query(AlexandriaContract.BookEntry.CONTENT_URI,
+                                                    null,
+                                                    ean,
+                                                    null,
+                                                    null,
+                                                    null);
+        if (c != null && c.getCount() > 0) { return true; };
+        return false;
+    }
+
+
     private void writeBackBook(String ean, String title, String subtitle, String desc, String imgUrl) {
         ContentValues values= new ContentValues();
         values.put(AlexandriaContract.BookEntry._ID, ean);
@@ -237,7 +250,7 @@ public class BookService extends IntentService {
         values.put(AlexandriaContract.BookEntry.IMAGE_URL, imgUrl);
         values.put(AlexandriaContract.BookEntry.SUBTITLE, subtitle);
         values.put(AlexandriaContract.BookEntry.DESC, desc);
-        getContentResolver().insert(AlexandriaContract.BookEntry.CONTENT_URI,values);
+        getContentResolver().insert(AlexandriaContract.BookEntry.CONTENT_URI, values);
     }
 
     private void writeBackAuthors(String ean, JSONArray jsonArray) throws JSONException {
